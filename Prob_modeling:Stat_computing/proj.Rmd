@@ -1,0 +1,418 @@
+---
+title: "Proj"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+library("readxl")
+
+years <- c(1990:2017)
+```
+
+
+```{r}
+library("readxl")
+france <- read_excel("data.xlsx", sheet = "FR")
+
+france <- france[-c(1,2)]
+##my_data <- my_data[-c(1:6,8:10,31,42,53,64,66,69,93,96,122,170,191,193,203,205,207,209,256,258,284,295,299,308,314,316,336,338,356,358,371,373,378,385,390,392,397,401,457,459,539), ]
+france <- france[c(460:538),]
+france <- france[-c(36,73,79),]
+france <- france[-72,]
+france.co2 = france[c(1,2,6,14,25,26,30,31,32,33,34,35),]
+france.GHG = france[c(37,38,42,50,61,62,66,67,68,69,70,71),]
+france.main = france[c(72:75),]
+dat <-t(france)
+france.co2 <- t(france.co2)
+france.GHG <- t(france.GHG)
+france.main <- t(france.main)
+
+header.true <- function(df) {
+  colnames(df) <- as.character(unlist(df[1,]))
+  df = df[-1,]
+  df = data.frame(df)
+}
+france.co2 = header.true(france.co2)
+france.GHG = header.true(france.GHG)
+france.main = header.true(france.main)
+
+france.co2$Fuel.Combustion.Activites = as.numeric(as.character(france.co2$Fuel.Combustion.Activites))
+france.co2$Energy.Industries = as.numeric(as.character(france.co2$Energy.Industries))
+france.co2$Manufacturing.Industries.and.Construction = as.numeric(as.character(france.co2$Manufacturing.Industries.and.Construction))
+france.co2$Transport=as.numeric(as.character(france.co2$Transport))
+france.co2$Commercial.Institutional = as.numeric(as.character(france.co2$Commercial.Institutional))
+france.co2$Residential=as.numeric(as.character(france.co2$Residential))
+france.co2$Industrial.Processes.and.Product.Use=as.numeric(as.character(france.co2$Industrial.Processes.and.Product.Use))
+france.co2$Agriculture=as.numeric(as.character(france.co2$Agriculture))
+france.co2$Waste.and.Others=as.numeric(as.character(france.co2$Waste.and.Others))
+france.co2$Indirect.CO2=as.numeric(as.character(france.co2$Indirect.CO2))
+france.co2$International.aviation=as.numeric(as.character(france.co2$International.aviation))
+france.co2$International.maritime.transport=as.numeric(as.character(france.co2$International.maritime.transport))
+
+france.GHG$Fuel.Combustion.Activites = as.numeric(as.character(france.GHG$Fuel.Combustion.Activites))
+france.GHG$Energy.Industries = as.numeric(as.character(france.GHG$Energy.Industries))
+france.GHG$Manufacturing.Industries.and.Construction = as.numeric(as.character(france.GHG$Manufacturing.Industries.and.Construction))
+france.GHG$Transport=as.numeric(as.character(france.GHG$Transport))
+france.GHG$Commercial.Institutional = as.numeric(as.character(france.GHG$Commercial.Institutional))
+france.GHG$Residential=as.numeric(as.character(france.GHG$Residential))
+france.GHG$Industrial.Processes.and.Product.Use=as.numeric(as.character(france.GHG$Industrial.Processes.and.Product.Use))
+france.GHG$Agriculture=as.numeric(as.character(france.GHG$Agriculture))
+france.GHG$Waste.and.Others=as.numeric(as.character(france.GHG$Waste.and.Others))
+france.GHG$Indirect.GHG=as.numeric(as.character(france.GHG$Indirect.CO2))
+france.GHG$International.aviation=as.numeric(as.character(france.GHG$International.aviation))
+france.GHG$International.maritime.transport=as.numeric(as.character(france.GHG$International.maritime.transport))
+
+france.main$GHG.national.total.emissions...index.1990 = as.numeric(as.character(france.main$GHG.national.total.emissions...index.1990))
+france.main$Total.GHG.per.capita...t.CO2.eq..cap=as.numeric(as.character(france.main$Total.GHG.per.capita...t.CO2.eq..cap))
+france.main$GHG.Intensity.of.fuel.commbustion...kg.CO2.eq..toe = as.numeric(as.character(france.main$GHG.Intensity.of.fuel.commbustion...kg.CO2.eq..toe))
+france.main$Total.GHG...GDP.Intensity...ton.CO2.eq..M..10=as.numeric(as.character(france.main$Total.GHG...GDP.Intensity...ton.CO2.eq..M..10))
+
+```
+```{r}
+uk <- read_excel("data.xlsx", sheet = "UK")
+
+uk <- uk[-c(1,2)]
+##my_data <- my_data[-c(1:6,8:10,31,42,53,64,66,69,93,96,122,170,191,193,203,205,207,209,256,258,284,295,299,308,314,316,336,338,356,358,371,373,378,385,390,392,397,401,457,459,539), ]
+uk <- uk[c(460:538),]
+uk <- uk[-c(36,73,79),]
+uk <- uk[-72,]
+uk.co2 = uk[c(1,2,6,14,25,26,30,31,32,33,34,35),]
+uk.GHG = uk[c(37,38,42,50,61,62,66,67,68,69,70,71),]
+uk.main = uk[c(72:75),]
+dat <-t(uk)
+uk.co2 <- t(uk.co2)
+uk.GHG <- t(uk.GHG)
+uk.main <- t(uk.main)
+
+header.true <- function(df) {
+  colnames(df) <- as.character(unlist(df[1,]))
+  df = df[-1,]
+  df = data.frame(df)
+}
+uk.co2 = header.true(uk.co2)
+uk.GHG = header.true(uk.GHG)
+uk.main = header.true(uk.main)
+
+uk.co2$Fuel.Combustion.Activites = as.numeric(as.character(uk.co2$Fuel.Combustion.Activites))
+uk.co2$Energy.Industries = as.numeric(as.character(uk.co2$Energy.Industries))
+uk.co2$Manufacturing.Industries.and.Construction = as.numeric(as.character(uk.co2$Manufacturing.Industries.and.Construction))
+uk.co2$Transport=as.numeric(as.character(uk.co2$Transport))
+uk.co2$Commercial.Institutional = as.numeric(as.character(uk.co2$Commercial.Institutional))
+uk.co2$Residential=as.numeric(as.character(uk.co2$Residential))
+uk.co2$Industrial.Processes.and.Product.Use=as.numeric(as.character(uk.co2$Industrial.Processes.and.Product.Use))
+uk.co2$Agriculture=as.numeric(as.character(uk.co2$Agriculture))
+uk.co2$Waste.and.Others=as.numeric(as.character(uk.co2$Waste.and.Others))
+uk.co2$Indirect.CO2=as.numeric(as.character(uk.co2$Indirect.CO2))
+uk.co2$International.aviation=as.numeric(as.character(uk.co2$International.aviation))
+uk.co2$International.maritime.transport=as.numeric(as.character(uk.co2$International.maritime.transport))
+
+uk.GHG$Fuel.Combustion.Activites = as.numeric(as.character(uk.GHG$Fuel.Combustion.Activites))
+uk.GHG$Energy.Industries = as.numeric(as.character(uk.GHG$Energy.Industries))
+uk.GHG$Manufacturing.Industries.and.Construction = as.numeric(as.character(uk.GHG$Manufacturing.Industries.and.Construction))
+uk.GHG$Transport=as.numeric(as.character(uk.GHG$Transport))
+uk.GHG$Commercial.Institutional = as.numeric(as.character(uk.GHG$Commercial.Institutional))
+uk.GHG$Residential=as.numeric(as.character(uk.GHG$Residential))
+uk.GHG$Industrial.Processes.and.Product.Use=as.numeric(as.character(uk.GHG$Industrial.Processes.and.Product.Use))
+uk.GHG$Agriculture=as.numeric(as.character(uk.GHG$Agriculture))
+uk.GHG$Waste.and.Others=as.numeric(as.character(uk.GHG$Waste.and.Others))
+uk.GHG$Indirect.GHG=as.numeric(as.character(uk.GHG$Indirect.CO2))
+uk.GHG$International.aviation=as.numeric(as.character(uk.GHG$International.aviation))
+uk.GHG$International.maritime.transport=as.numeric(as.character(uk.GHG$International.maritime.transport))
+
+uk.main$GHG.national.total.emissions...index.1990 = as.numeric(as.character(uk.main$GHG.national.total.emissions...index.1990))
+uk.main$Total.GHG.per.capita...t.CO2.eq..cap=as.numeric(as.character(uk.main$Total.GHG.per.capita...t.CO2.eq..cap))
+uk.main$GHG.Intensity.of.fuel.commbustion...kg.CO2.eq..toe = as.numeric(as.character(uk.main$GHG.Intensity.of.fuel.commbustion...kg.CO2.eq..toe))
+uk.main$Total.GHG...GDP.Intensity...ton.CO2.eq..M..10=as.numeric(as.character(uk.main$Total.GHG...GDP.Intensity...ton.CO2.eq..M..10))
+```
+```{r}
+eu <- read_excel("data.xlsx", sheet = "EU28")
+
+eu <- eu[-c(1,2)]
+##my_data <- my_data[-c(1:6,8:10,31,42,53,64,66,69,93,96,122,170,191,193,203,205,207,209,256,258,284,295,299,308,314,316,336,338,356,358,371,373,378,385,390,392,397,401,457,459,539), ]
+eu <- eu[c(460:538),]
+eu <- eu[-c(36,73,79),]
+eu <- eu[-72,]
+eu.co2 = eu[c(1,2,6,14,25,26,30,31,32,33,34,35),]
+eu.GHG = eu[c(37,38,42,50,61,62,66,67,68,69,70,71),]
+eu.main = eu[c(72:75),]
+dat <-t(eu)
+eu.co2 <- t(eu.co2)
+eu.GHG <- t(eu.GHG)
+eu.main <- t(eu.main)
+
+header.true <- function(df) {
+  colnames(df) <- as.character(unlist(df[1,]))
+  df = df[-1,]
+  df = data.frame(df)
+}
+eu.co2 = header.true(eu.co2)
+eu.GHG = header.true(eu.GHG)
+eu.main = header.true(eu.main)
+
+eu.co2$Fuel.Combustion.Activites = as.numeric(as.character(eu.co2$Fuel.Combustion.Activites))
+eu.co2$Energy.Industries = as.numeric(as.character(eu.co2$Energy.Industries))
+eu.co2$Manufacturing.Industries.and.Construction = as.numeric(as.character(eu.co2$Manufacturing.Industries.and.Construction))
+eu.co2$Transport=as.numeric(as.character(eu.co2$Transport))
+eu.co2$Commercial.Institutional = as.numeric(as.character(eu.co2$Commercial.Institutional))
+eu.co2$Residential=as.numeric(as.character(eu.co2$Residential))
+eu.co2$Industrial.Processes.and.Product.Use=as.numeric(as.character(eu.co2$Industrial.Processes.and.Product.Use))
+eu.co2$Agriculture=as.numeric(as.character(eu.co2$Agriculture))
+eu.co2$Waste.and.Others=as.numeric(as.character(eu.co2$Waste.and.Others))
+eu.co2$Indirect.CO2=as.numeric(as.character(eu.co2$Indirect.CO2))
+eu.co2$International.aviation=as.numeric(as.character(eu.co2$International.aviation))
+eu.co2$International.maritime.transport=as.numeric(as.character(eu.co2$International.maritime.transport))
+
+eu.GHG$Fuel.Combustion.Activites = as.numeric(as.character(eu.GHG$Fuel.Combustion.Activites))
+eu.GHG$Energy.Industries = as.numeric(as.character(eu.GHG$Energy.Industries))
+eu.GHG$Manufacturing.Industries.and.Construction = as.numeric(as.character(eu.GHG$Manufacturing.Industries.and.Construction))
+eu.GHG$Transport=as.numeric(as.character(eu.GHG$Transport))
+eu.GHG$Commercial.Institutional = as.numeric(as.character(eu.GHG$Commercial.Institutional))
+eu.GHG$Residential=as.numeric(as.character(eu.GHG$Residential))
+eu.GHG$Industrial.Processes.and.Product.Use=as.numeric(as.character(eu.GHG$Industrial.Processes.and.Product.Use))
+eu.GHG$Agriculture=as.numeric(as.character(eu.GHG$Agriculture))
+eu.GHG$Waste.and.Others=as.numeric(as.character(eu.GHG$Waste.and.Others))
+eu.GHG$Indirect.GHG=as.numeric(as.character(eu.GHG$Indirect.CO2))
+eu.GHG$International.aviation=as.numeric(as.character(eu.GHG$International.aviation))
+eu.GHG$International.maritime.transport=as.numeric(as.character(eu.GHG$International.maritime.transport))
+
+eu.main$GHG.national.total.emissions...index.1990 = as.numeric(as.character(eu.main$GHG.national.total.emissions...index.1990))
+eu.main$Total.GHG.per.capita...t.CO2.eq..cap=as.numeric(as.character(eu.main$Total.GHG.per.capita...t.CO2.eq..cap))
+eu.main$GHG.Intensity.of.fuel.commbustion...kg.CO2.eq..toe = as.numeric(as.character(eu.main$GHG.Intensity.of.fuel.commbustion...kg.CO2.eq..toe))
+eu.main$Total.GHG...GDP.Intensity...ton.CO2.eq..M..10=as.numeric(as.character(eu.main$Total.GHG...GDP.Intensity...ton.CO2.eq..M..10))
+```
+```{r}
+de <- read_excel("data.xlsx", sheet = "DE")
+
+de <- de[-c(1,2)]
+##my_data <- my_data[-c(1:6,8:10,31,42,53,64,66,69,93,96,122,170,191,193,203,205,207,209,256,258,284,295,299,308,314,316,336,338,356,358,371,373,378,385,390,392,397,401,457,459,539), ]
+de <- de[c(460:538),]
+de <- de[-c(36,73,79),]
+de <- de[-72,]
+de.co2 = de[c(1,2,6,14,25,26,30,31,32,33,34,35),]
+de.GHG = de[c(37,38,42,50,61,62,66,67,68,69,70,71),]
+de.main = de[c(72:75),]
+dat <-t(de)
+de.co2 <- t(de.co2)
+de.GHG <- t(de.GHG)
+de.main <- t(de.main)
+
+header.true <- function(df) {
+  colnames(df) <- as.character(unlist(df[1,]))
+  df = df[-1,]
+  df = data.frame(df)
+}
+de.co2 = header.true(de.co2)
+de.GHG = header.true(de.GHG)
+de.main = header.true(de.main)
+
+de.co2$Fuel.Combustion.Activites = as.numeric(as.character(de.co2$Fuel.Combustion.Activites))
+de.co2$Energy.Industries = as.numeric(as.character(de.co2$Energy.Industries))
+de.co2$Manufacturing.Industries.and.Construction = as.numeric(as.character(de.co2$Manufacturing.Industries.and.Construction))
+de.co2$Transport=as.numeric(as.character(de.co2$Transport))
+de.co2$Commercial.Institutional = as.numeric(as.character(de.co2$Commercial.Institutional))
+de.co2$Residential=as.numeric(as.character(de.co2$Residential))
+de.co2$Industrial.Processes.and.Product.Use=as.numeric(as.character(de.co2$Industrial.Processes.and.Product.Use))
+de.co2$Agriculture=as.numeric(as.character(de.co2$Agriculture))
+de.co2$Waste.and.Others=as.numeric(as.character(de.co2$Waste.and.Others))
+de.co2$Indirect.CO2=as.numeric(as.character(de.co2$Indirect.CO2))
+de.co2$International.aviation=as.numeric(as.character(de.co2$International.aviation))
+de.co2$International.maritime.transport=as.numeric(as.character(de.co2$International.maritime.transport))
+
+de.GHG$Fuel.Combustion.Activites = as.numeric(as.character(de.GHG$Fuel.Combustion.Activites))
+de.GHG$Energy.Industries = as.numeric(as.character(de.GHG$Energy.Industries))
+de.GHG$Manufacturing.Industries.and.Construction = as.numeric(as.character(de.GHG$Manufacturing.Industries.and.Construction))
+de.GHG$Transport=as.numeric(as.character(de.GHG$Transport))
+de.GHG$Commercial.Institutional = as.numeric(as.character(de.GHG$Commercial.Institutional))
+de.GHG$Residential=as.numeric(as.character(de.GHG$Residential))
+de.GHG$Industrial.Processes.and.Product.Use=as.numeric(as.character(de.GHG$Industrial.Processes.and.Product.Use))
+de.GHG$Agriculture=as.numeric(as.character(de.GHG$Agriculture))
+de.GHG$Waste.and.Others=as.numeric(as.character(de.GHG$Waste.and.Others))
+de.GHG$Indirect.GHG=as.numeric(as.character(de.GHG$Indirect.CO2))
+de.GHG$International.aviation=as.numeric(as.character(de.GHG$International.aviation))
+de.GHG$International.maritime.transport=as.numeric(as.character(de.GHG$International.maritime.transport))
+
+de.main$GHG.national.total.emissions...index.1990 = as.numeric(as.character(de.main$GHG.national.total.emissions...index.1990))
+de.main$Total.GHG.per.capita...t.CO2.eq..cap=as.numeric(as.character(de.main$Total.GHG.per.capita...t.CO2.eq..cap))
+de.main$GHG.Intensity.of.fuel.commbustion...kg.CO2.eq..toe = as.numeric(as.character(de.main$GHG.Intensity.of.fuel.commbustion...kg.CO2.eq..toe))
+de.main$Total.GHG...GDP.Intensity...ton.CO2.eq..M..10=as.numeric(as.character(de.main$Total.GHG...GDP.Intensity...ton.CO2.eq..M..10))
+
+```
+
+
+
+Hypothesis Test for UK and France transport mean.
+```{r}
+uk.transport = uk.co2$Transport
+fr.transport = france.co2$Transport
+uk.transport.mean =  mean(uk.transport)
+fr.transport.mean =  mean(fr.transport)
+n=28
+uk.transport.var = var(uk.transport)
+fr.transport.var = var(fr.transport)
+
+
+
+t_val = (uk.transport.mean-fr.transport.mean)/(uk.transport.var/n+fr.transport.var/n)^0.5
+t_val
+
+t.test(uk.transport,fr.transport)
+```
+
+proportion test z = 1.64
+```{r}
+eu.prop = eu.co2$Transport/eu.co2$Fuel.Combustion.Activites
+eu.prop.mean = mean(eu.prop)
+hist(eu.prop)
+```
+
+```{r}
+
+
+uk.prop = uk.co2$Transport/uk.co2$Fuel.Combustion.Activites
+fr.prop = france.co2$Transport/france.co2$Fuel.Combustion.Activites
+de.prop = de.co2$Transport/de.co2$Fuel.Combustion.Activites
+
+
+uk.prop.mean = mean(uk.prop)
+fr.prop.mean = mean(fr.prop)
+
+z.val.uk = (uk.prop.mean-0.25)/(uk.prop.mean*(1-uk.prop.mean)/n)^0.5
+z.val.fr = (fr.prop.mean-0.35)/(fr.prop.mean*(1-fr.prop.mean)/n)^0.5
+
+
+t.test(uk.prop, eu.prop, alternative = "two.sided")
+t.test(fr.prop, eu.prop, alternative = "two.sided")
+t.test(de.prop, eu.prop, alternative = "two.sided")
+
+t.test(uk.prop,alternative = "two.sided")
+t.test(fr.prop,  alternative = "two.sided")
+t.test(de.prop,  alternative = "two.sided")
+```
+
+linear regression
+```{r}
+model.fr = lm(Fuel.Combustion.Activites~Transport,data = france.co2)
+summary(model.fr)
+
+model.eu = lm(GHG.Intensity.of.fuel.commbustion...kg.CO2.eq..toe~year ,data=eu.main)
+summary(model.eu)
+
+```
+
+
+```{r}
+model.eu.IA = lm(International.aviation~year,data = eu.co2)
+summary(model.eu.IA)
+plot(International.aviation~year,data = eu.co2)
+```
+Map
+```{r}
+countries = vector()
+co2 = vector()
+transports = vector()
+m= matrix(1:28*28, nrow = 28, ncol = 28)
+for(i in 3:30){
+  dat <- read_excel("data.xlsx",sheet = i)
+  country = as.character(dat[4,4])
+  countries=c(countries,country)
+  for(j in 0:27){
+    m[i-2,j+1] = (as.numeric(dat[473,4+j]))/(as.numeric(dat[460,4+j]))
+  }
+}
+df = as.data.frame(m)
+colnames(df) = c(1990:2017)
+```
+
+
+```{r}
+df$country = countries
+```
+
+
+
+```{r}
+transport.prop = as.data.frame(t(m))
+colnames(transport.prop) = countries
+rownames(transport.prop) = c(1990:2017)
+```
+
+```{r}
+eu.prop = eu.co2$Energy.Industries/eu.co2$Fuel.Combustion.Activites
+eu.prop.mean = mean(eu.prop)
+hist(eu.prop)
+
+uk.prop = uk.co2$Energy.Industries/uk.co2$Fuel.Combustion.Activites
+fr.prop = france.co2$Energy.Industries/france.co2$Fuel.Combustion.Activites
+de.prop = de.co2$Energy.Industries/de.co2$Fuel.Combustion.Activites
+
+
+uk.prop.mean = mean(uk.prop)
+fr.prop.mean = mean(fr.prop)
+
+z.val.uk = (uk.prop.mean-0.25)/(uk.prop.mean*(1-uk.prop.mean)/n)^0.5
+z.val.fr = (fr.prop.mean-0.35)/(fr.prop.mean*(1-fr.prop.mean)/n)^0.5
+hist(uk.prop)
+hist(fr.prop)
+
+hist(de.prop)
+
+t.test(uk.prop, eu.prop, alternative = "two.sided")
+t.test(fr.prop, eu.prop, alternative = "two.sided")
+t.test(de.prop, eu.prop, alternative = "two.sided")
+```
+```{r}
+t.test(uk.prop,alternative = "two.sided")
+t.test(fr.prop,  alternative = "two.sided")
+t.test(de.prop,  alternative = "two.sided")
+```
+```{r}
+model.eu = lm(GHG.Intensity.of.fuel.commbustion...kg.CO2.eq..toe~year ,data=eu.main)
+summary(model.eu)
+
+model.uk = lm(GHG.Intensity.of.fuel.commbustion...kg.CO2.eq..toe~year ,data=uk.main)
+summary(model.uk)
+
+model.fr = lm(GHG.Intensity.of.fuel.commbustion...kg.CO2.eq..toe~year ,data=france.main)
+summary(model.fr)
+```
+```{r}
+res = resid(model.eu)
+plot(eu.main$GHG.Intensity.of.fuel.commbustion...kg.CO2.eq..toe,res)
+abline(0,0)
+
+res = resid(model.uk)
+plot(uk.main$GHG.Intensity.of.fuel.commbustion...kg.CO2.eq..toe,res)
+abline(0,0)
+
+res = resid(model.fr)
+plot(france.main$GHG.Intensity.of.fuel.commbustion...kg.CO2.eq..toe,res)
+abline(0,0)
+```
+
+```{r}
+model.eu.inter = lm(International.aviation~year ,data=eu.co2)
+summary(model.eu.inter)
+
+model.uk.inter = lm(International.aviation~year ,data=uk.co2)
+summary(model.uk.inter)
+
+model.fr.inter = lm(International.aviation~year ,data=france.co2)
+summary(model.fr.inter)
+```
+```{r}
+res = resid(model.eu.inter)
+plot(eu.co2$International.aviation,res)
+abline(0,0)
+
+res = resid(model.uk)
+plot(uk.co2$International.aviation,res)
+abline(0,0)
+
+res = resid(model.fr)
+plot(france.co2$International.aviation,res)
+abline(0,0)
+```
+
+
+
+
